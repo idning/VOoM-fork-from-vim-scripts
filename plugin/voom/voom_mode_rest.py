@@ -1,4 +1,5 @@
 # voom_mode_rest.py
+# encoding:utf8
 # Last Modified: 2012-04-02
 # VOoM -- Vim two-pane outliner, plugin for Python-enabled Vim version 7.x
 # Website: http://www.vim.org/scripts/script.php?script_id=2657
@@ -24,6 +25,8 @@ http://docs.python.org/documenting/rest.html#sections
 Python recommended styles:   ##  **  =  -  ^  "
 """
 
+import vim
+
 # All valid section title adornment characters.
 AD_CHARS = """  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~  """
 AD_CHARS = AD_CHARS.split()
@@ -46,12 +49,15 @@ assert len(AD_STYLES)==64
 # convert AD_CHARS to dict for faster lookups
 AD_CHARS = {}.fromkeys(AD_CHARS)
 
+ddebug = 0
 
 def hook_makeOutline(VO, blines):
     """Return (tlines, bnodes, levels) for Body lines blines.
     blines is either Vim buffer object (Body) or list of buffer lines.
     """
     Z = len(blines)
+    if ddebug:
+        print 'hook_makeOutline len(blines)', Z
     tlines, bnodes, levels = [], [], []
     tlines_add, bnodes_add, levels_add = tlines.append, bnodes.append, levels.append
     ENC = VO.enc
@@ -84,6 +90,8 @@ def hook_makeOutline(VO, blines):
             #if len(L1) < len(L2.decode(ENC,'replace')): continue
             gotHead = True
             ad = L1[0]
+            #print i, vim.current.buffer.name
+            #blines[i] = ad * len(L2.decode(ENC,'replace').encode("GBK")) # ning got E439: undo list corrupt
             head = L2.strip()
             bnode = i
         # there is overline -- bnode is lnum of overline!
@@ -124,6 +132,9 @@ def hook_newHeadline(VO, level, blnum, tlnum):
     ads_levels = VO.ads_levels
     levels_ads = dict([[v,k] for k,v in ads_levels.items()])
 
+    if ddebug:
+        print 'hook_newHeadline'
+
     if level in levels_ads:
         ad = levels_ads[level]
     else:
@@ -149,6 +160,8 @@ def hook_newHeadline(VO, level, blnum, tlnum):
 def hook_doBodyAfterOop(VO, oop, levDelta, blnum1, tlnum1, blnum2, tlnum2, blnumCut, tlnumCut):
     # this is instead of hook_changeLevBodyHead()
     #print oop, levDelta, blnum1, tlnum1, blnum2, tlnum2, tlnumCut, blnumCut
+    if ddebug:
+        print 'hook_doBodyAfterOop'
     Body = VO.Body
     Z = len(Body)
     bnodes, levels = VO.bnodes, VO.levels
@@ -293,6 +306,8 @@ def update_bnodes(VO, tlnum, delta):
     """Update VO.bnodes by adding/substracting delta to each bnode
     starting with bnode at tlnum and to the end.
     """
+    if ddebug:
+        print 'update_bnodes'
     bnodes = VO.bnodes
     for i in xrange(tlnum, len(bnodes)+1):
         bnodes[i-1] += delta
@@ -302,6 +317,8 @@ def get_new_ad(levels_ads, ads_levels, level):
     """Return adornment style for new level, that is level missing from
     levels_ads and ads_levels.
     """
+    if ddebug:
+        print 'get_new_ad'
     for ad in AD_STYLES:
         if not ad in ads_levels:
             return ad
@@ -310,6 +327,7 @@ def get_new_ad(levels_ads, ads_levels, level):
     return levels_ads[64]
 
 
+#在调整左边level 的时候会使用该函数.
 def deduce_ad_style(L1,L2,L3,ENC):
     """Deduce adornment style given first 3 lines of Body node.
     1st line is bnode line. Lines must be rstripped.
@@ -321,6 +339,8 @@ def deduce_ad_style(L1,L2,L3,ENC):
     # head  L2      ----  L2             Body[bln]
     # ----  L3      text  L3             Body[bln+1]
 
+    if ddebug:
+        print 'deduce_ad_style'
     # bnode is overline
     if L1==L3 and (L1[0] in AD_CHARS) and L1.lstrip(L1[0])=='' and (len(L1) >= len(L2.decode(ENC,'replace'))):
         ad = 2*L1[0]
@@ -348,6 +368,8 @@ def deduce_ad_style_test(VO):
     """ Test to verify deduce_ad_style(). Execute from Vim
       :py voom.VOOMS[1].mModule.deduce_ad_style_test(voom.VOOMS[1])
     """
+    if ddebug:
+        print 'deduce_ad_style_test'
     bnodes, levels, Body = VO.bnodes, VO.levels, VO.Body
     ads_levels = VO.ads_levels
     levels_ads = dict([[v,k] for k,v in ads_levels.items()])

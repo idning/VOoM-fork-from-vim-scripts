@@ -1106,28 +1106,28 @@ nnoremap <buffer><silent>             AA :<C-u>call Voom_OopInsert('as_child')<C
 
 " move
 nnoremap <buffer><silent> <LocalLeader>u :<C-u>call Voom_Oop('up', 'n')<CR>
-nnoremap <buffer><silent>         <C-Up> :<C-u>call Voom_Oop('up', 'n')<CR>
+nnoremap <buffer><silent>         <C-S-Up> :<C-u>call Voom_Oop('up', 'n')<CR>
 nnoremap <buffer><silent>             ^^ :<C-u>call Voom_Oop('up', 'n')<CR>
 vnoremap <buffer><silent> <LocalLeader>u :<C-u>call Voom_Oop('up', 'v')<CR>
 vnoremap <buffer><silent>         <C-Up> :<C-u>call Voom_Oop('up', 'v')<CR>
 vnoremap <buffer><silent>             ^^ :<C-u>call Voom_Oop('up', 'v')<CR>
 
 nnoremap <buffer><silent> <LocalLeader>d :<C-u>call Voom_Oop('down', 'n')<CR>
-nnoremap <buffer><silent>       <C-Down> :<C-u>call Voom_Oop('down', 'n')<CR>
+nnoremap <buffer><silent>       <C-S-Down> :<C-u>call Voom_Oop('down', 'n')<CR>
 nnoremap <buffer><silent>             __ :<C-u>call Voom_Oop('down', 'n')<CR>
 vnoremap <buffer><silent> <LocalLeader>d :<C-u>call Voom_Oop('down', 'v')<CR>
 vnoremap <buffer><silent>       <C-Down> :<C-u>call Voom_Oop('down', 'v')<CR>
 vnoremap <buffer><silent>             __ :<C-u>call Voom_Oop('down', 'v')<CR>
 
 nnoremap <buffer><silent> <LocalLeader>l :<C-u>call Voom_Oop('left', 'n')<CR>
-nnoremap <buffer><silent>       <C-Left> :<C-u>call Voom_Oop('left', 'n')<CR>
+nnoremap <buffer><silent>       <C-S-Left> :<C-u>call Voom_Oop('left', 'n')<CR>
 nnoremap <buffer><silent>             << :<C-u>call Voom_Oop('left', 'n')<CR>
 vnoremap <buffer><silent> <LocalLeader>l :<C-u>call Voom_Oop('left', 'v')<CR>
 vnoremap <buffer><silent>       <C-Left> :<C-u>call Voom_Oop('left', 'v')<CR>
 vnoremap <buffer><silent>             << :<C-u>call Voom_Oop('left', 'v')<CR>
 
 nnoremap <buffer><silent> <LocalLeader>r :<C-u>call Voom_Oop('right', 'n')<CR>
-nnoremap <buffer><silent>      <C-Right> :<C-u>call Voom_Oop('right', 'n')<CR>
+nnoremap <buffer><silent>      <C-S-Right> :<C-u>call Voom_Oop('right', 'n')<CR>
 nnoremap <buffer><silent>             >> :<C-u>call Voom_Oop('right', 'n')<CR>
 vnoremap <buffer><silent> <LocalLeader>r :<C-u>call Voom_Oop('right', 'v')<CR>
 vnoremap <buffer><silent>      <C-Right> :<C-u>call Voom_Oop('right', 'v')<CR>
