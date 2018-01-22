@@ -923,7 +923,7 @@ func! Voom_TreeBufUnload() "{{{2
     "echom bufexists(tree) --always 0
     "exe 'noautocmd bwipeout '.tree
     exe 'au! VoomTree * <buffer='.tree.'>'
-    exe 'bwipeout '.tree
+    silent! exe 'bwipeout '.tree
     call Voom_UnVoom(body,tree)
 endfunc
 
@@ -2823,7 +2823,7 @@ func! Voom_GetExecRange(lnum) "{{{2
     let status = Voom_FoldStatus(a:lnum)
     if status=='hidden'
         call Voom_ErrorMsg('VOoM: line is hidden in fold')
-        return ['',-1,-1,-1] 
+        return ['',-1,-1,-1]
     endif
     " Tree buffer: get start/end of Body node and subnodes.
     if has_key(s:voom_trees, bnr)
